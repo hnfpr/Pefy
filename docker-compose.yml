@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  personal-finance-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: personal-finance-dashboard
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # Optional: Mount a volume for persistent data if needed in the future
+      - dashboard_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "com.docker.compose.project=personal-finance-dashboard"
+      - "description=Personal Financial Dashboard - Self-hosted finance tracking"
+
+  # Optional: Add a reverse proxy for HTTPS in production
+  # nginx-proxy:
+  #   image: nginx:alpine
+  #   container_name: nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx-proxy.conf:/etc/nginx/nginx.conf:ro
+  #     - ./ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - personal-finance-dashboard
+  #   restart: unless-stopped
+
+volumes:
+  dashboard_data:
+    driver: local
+
+networks:
+  default:
+    name: finance-dashboard-network
