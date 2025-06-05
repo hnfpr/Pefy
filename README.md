@@ -60,7 +60,7 @@ This application is fully containerized and ready for self-hosting with Docker.
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/hnfpr/Pefy
 cd "Personal Financial Dashboard"
 
 # Start with Docker Compose (recommended)
@@ -101,7 +101,7 @@ docker run -d -p 3000:80 --name finance-dashboard personal-finance-dashboard
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/hnfpr/Pefy
    cd personal-financial-dashboard
    ```
 
